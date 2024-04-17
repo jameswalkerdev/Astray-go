@@ -1,0 +1,32 @@
+name: astray-go # you probably want to 'snapcraft register <name>'
+base: core22 # the base snap is the execution environment for this snap
+version: '1.0.0' # just for humans, typically '1.2+git' or '1.3.2'
+title: Astray
+summary: Solve puzzles and evade traps to find your way out. # 79 char long summary
+description: |
+  Embark on a journey through the enigmatic corridors of 'Astray.' 
+  Navigate intricate mazes, solve puzzles, and evade traps to find your way out. 
+  Will you unravel its mysteries, or be forever lost in its depths?
+
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
+
+apps:
+  astray-go:
+    command: bin/astray-go-bin
+    extensions: [gnome]
+    plugs:
+      - network
+      - unity7
+      - network-status
+
+layout:
+  /usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/webkit2gtk-4.1:
+    bind: $SNAP/gnome-platform/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/webkit2gtk-4.0
+
+parts:
+  astray-go:
+    plugin: dump
+    source: .
+    organize:
+      astray-go-bin: bin/
